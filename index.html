@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Grow Your Virtual Plant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Grow Your Virtual Plant 🌱</h1>
+
+        <!-- Image representing the plant -->
+        <img id="plantImage" src="seedling.png" alt="Virtual Plant">
+
+        <!-- Plant Status -->
+        <p id="plantStatus">Plant Status: Seedling</p>
+
+        <!-- Water Button -->
+        <button onclick="waterPlant()">Water the Plant</button>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
+
+    <!-- Your Firebase Configuration -->
+    <script src="firebase-config.js"></script>
+
+    <!-- Your main script -->
+    <script src="script.js"></script>
+
+</body>
+</html>

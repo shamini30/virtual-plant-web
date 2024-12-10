@@ -1,0 +1,68 @@
+/* General reset */
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f8ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container for centering content */
+.container {
+    text-align: center;
+    padding: 30px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    max-width: 400px;
+    width: 90%;
+}
+
+/* Title text */
+h1 {
+    font-size: 2em;
+    color: #2e8b57;
+}
+
+/* Plant Image */
+#plantImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin: 20px auto;
+    display: block;
+}
+
+/* Plant Status Text */
+#plantStatus {
+    font-weight: bold;
+    color: #006400;
+    font-size: 1.5em;
+    margin: 15px;
+}
+
+/* Button to Water Plant */
+button {
+    background-color: #ffeb3d;
+    color: #000;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+    outline: none;
+}
+
+/* Button Hover Effect */
+button:hover {
+    background-color: #ffe082;
+    transform: scale(1.05);
+}
+
+/* Button Press Effect */
+button:active {
