@@ -1,45 +1,124 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
 <title>Our Little Plant 🌹</title>
+
 <link rel="stylesheet" href="style.css">
+```
+
 </head>
+
 <body>
+
+```
 <main class="plant-container">
+
     <section class="plant-card">
+
         <h1>Our Little Plant 🌹</h1>
+
         <p class="subtitle">
             A little plant that needs both of us.
         </p>
+
+
         <div class="plant-display">
-            <div id="plantImage" class="plant-image">🌱</div>
+
+            <div
+                id="plantImage"
+                class="plant-image"
+            >
+                🌱
+            </div>
+
         </div>
-        <p id="plantStatus" class="plant-status">
+
+
+        <p
+            id="plantStatus"
+            class="plant-status"
+        >
             Waiting to be watered...
         </p>
+
+
         <div class="watering-info">
+
             <div class="person">
-                <span class="person-name">Mini</span>
-                <span id="miniStatus" class="water-status">
+
+                <span class="person-name">
+                    Mini
+                </span>
+
+                <span
+                    id="miniStatus"
+                    class="water-status"
+                >
                     Not watered
                 </span>
+
             </div>
+
+
             <div class="person">
-                <span class="person-name">Darius</span>
-                <span id="dariusStatus" class="water-status">
+
+                <span class="person-name">
+                    Darius
+                </span>
+
+                <span
+                    id="dariusStatus"
+                    class="water-status"
+                >
                     Not watered
                 </span>
+
             </div>
+
         </div>
-        <button id="waterButton" onclick="waterPlant()">
+
+
+        <button
+            id="waterButton"
+            onclick="waterPlant()"
+        >
             Water the Plant 💧
         </button>
-        <p id="message" class="message"></p>
+
+
+        <p
+            id="message"
+            class="message"
+        ></p>
+
     </section>
+
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<!-- Supabase JavaScript library -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<!-- Our JavaScript -->
+
 <script src="script.js"></script>
+```
+
 </body>
+
 </html>
