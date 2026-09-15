@@ -1,68 +1,213 @@
-/* General reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f0f8ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+min-height: 100vh;
+
+```
+display: flex;
+justify-content: center;
+align-items: center;
+
+font-family: Arial, sans-serif;
+
+background: #f4efe7;
+color: #2f352c;
+```
+
 }
 
-/* Container for centering content */
-.container {
-    text-align: center;
-    padding: 30px;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    max-width: 400px;
-    width: 90%;
+.plant-container {
+width: 100%;
+padding: 30px;
 }
 
-/* Title text */
+.plant-card {
+width: 100%;
+max-width: 500px;
+
+```
+margin: auto;
+padding: 45px 35px;
+
+text-align: center;
+
+background: #fffdf8;
+
+border-radius: 24px;
+
+box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.08);
+```
+
+}
+
 h1 {
-    font-size: 2em;
-    color: #2e8b57;
+margin-bottom: 10px;
+
+```
+font-size: 32px;
+font-weight: 600;
+```
+
 }
 
-/* Plant Image */
-#plantImage {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    margin: 20px auto;
-    display: block;
+.subtitle {
+margin-bottom: 35px;
+
+```
+color: #777c72;
+
+font-size: 15px;
+```
+
 }
 
-/* Plant Status Text */
-#plantStatus {
-    font-weight: bold;
-    color: #006400;
-    font-size: 1.5em;
-    margin: 15px;
+.plant-display {
+height: 220px;
+
+```
+display: flex;
+justify-content: center;
+align-items: center;
+
+margin-bottom: 20px;
+```
+
 }
 
-/* Button to Water Plant */
+.plant-image {
+font-size: 120px;
+
+```
+transition: transform 0.3s ease;
+```
+
+}
+
+.plant-image:hover {
+transform: scale(1.05);
+}
+
+.plant-status {
+margin-bottom: 30px;
+
+```
+font-size: 17px;
+font-weight: 500;
+```
+
+}
+
+.watering-info {
+display: flex;
+gap: 15px;
+
+```
+margin-bottom: 25px;
+```
+
+}
+
+.person {
+flex: 1;
+
+```
+padding: 15px;
+
+background: #f3f0e9;
+
+border-radius: 14px;
+```
+
+}
+
+.person-name {
+display: block;
+
+```
+margin-bottom: 7px;
+
+font-weight: 600;
+```
+
+}
+
+.water-status {
+font-size: 13px;
+color: #858980;
+}
+
 button {
-    background-color: #ffeb3d;
-    color: #000;
-    font-weight: bold;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.5em;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-top: 10px;
-    outline: none;
+width: 100%;
+
+```
+padding: 15px;
+
+border: none;
+border-radius: 14px;
+
+background: #65745b;
+color: white;
+
+font-size: 16px;
+font-weight: 600;
+
+cursor: pointer;
+
+transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+```
+
 }
 
-/* Button Hover Effect */
 button:hover {
-    background-color: #ffe082;
-    transform: scale(1.05);
+transform: translateY(-2px);
+opacity: 0.9;
 }
 
-/* Button Press Effect */
 button:active {
+transform: translateY(0);
+}
+
+.message {
+min-height: 20px;
+
+```
+margin-top: 18px;
+
+font-size: 14px;
+color: #777c72;
+```
+
+}
+
+@media (max-width: 500px) {
+
+```
+.plant-container {
+    padding: 15px;
+}
+
+.plant-card {
+    padding: 35px 20px;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+.watering-info {
+    gap: 8px;
+}
+
+.person {
+    padding: 12px 8px;
+}
+```
+
+}
