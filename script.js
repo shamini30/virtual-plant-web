@@ -1,26 +1,50 @@
 /*
-TEMPORARY LOCAL VERSION
+VIRTUAL PLANT
+Supabase-connected version
 
 ```
-This is NOT connected to Supabase yet.
+This version:
+- Connects to Supabase
+- Reads the shared plant
+- Shows who has watered
+- Lets the current user water the plant
 
-We are using this just to test the website interface
-before connecting the database.
+IMPORTANT:
+Replace SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY
+with the values from your Supabase project.
 ```
 
 */
 
-// Temporary local data
-let plantData = {
-miniWatered: false,
-dariusWatered: false
-};
+// --------------------------------------------------
+// SUPABASE CONNECTION
+// --------------------------------------------------
 
-// Change this later when we add proper login/authentication
-// For now, you can test both people from the browser console.
-let currentUser = "Mini";
+const SUPABASE_URL = "https://qmlnhisiqyibyrpedmxx.supabase.co/rest/v1/";
 
-// Get HTML elements
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_8XN0TGVlZ7IC7plY3O1TOQ_2FpUDSg_";
+
+const supabase = window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_PUBLISHABLE_KEY
+);
+
+// --------------------------------------------------
+// TEMPORARY USER
+// --------------------------------------------------
+
+// For now we are pretending this browser belongs to Mini.
+//
+// Later we will replace this with proper authentication
+// so Mini and Darius can have separate accounts.
+
+const currentUser = "Mini";
+
+// --------------------------------------------------
+// HTML ELEMENTS
+// --------------------------------------------------
+
 const plantImage = document.getElementById("plantImage");
 const plantStatus = document.getElementById("plantStatus");
 
@@ -30,16 +54,64 @@ const dariusStatus = document.getElementById("dariusStatus");
 const waterButton = document.getElementById("waterButton");
 const message = document.getElementById("message");
 
-// Update the plant based on current data
-function updatePlant() {
+// --------------------------------------------------
+// GET PLANT DATA
+// --------------------------------------------------
+
+async function loadPlant() {
 
 ```
-if (plantData.miniWatered && plantData.dariusWatered) {
+message.textContent = "Checking on the plant...";
+
+const { data, error } = await supabase
+    .from("plant")
+    .select("id, mini_last_watered, darius_last_watered")
+    .eq("id", 1)
+    .single();
+
+
+if (error) {
+
+    console.error("Supabase error:", error);
+
+    message.textContent =
+        "Couldn't connect to the plant database.";
+
+    return;
+}
+
+
+console.log("Plant data:", data);
+
+updatePlantDisplay(data);
+
+message.textContent = "";
+```
+
+}
+
+// --------------------------------------------------
+// UPDATE THE PAGE
+// --------------------------------------------------
+
+function updatePlantDisplay(data) {
+
+```
+const miniWatered = data.mini_last_watered !== null;
+
+const dariusWatered = data.darius_last_watered !== null;
+
+
+// -----------------------------
+// Plant appearance
+// -----------------------------
+
+if (miniWatered && dariusWatered) {
 
     plantImage.textContent = "🌹";
 
     plantStatus.textContent =
-        "The plant is happy. Both of you watered it. 🌹";
+        "Both of you watered the plant. 🌹";
 
 } else {
 
@@ -51,8 +123,11 @@ if (plantData.miniWatered && plantData.dariusWatered) {
 }
 
 
-// Update Mini's status
-if (plantData.miniWatered) {
+// -----------------------------
+// Mini status
+// -----------------------------
+
+if (miniWatered) {
 
     miniStatus.textContent = "Watered ✓";
 
@@ -63,8 +138,11 @@ if (plantData.miniWatered) {
 }
 
 
-// Update Darius's status
-if (plantData.dariusWatered) {
+// -----------------------------
+// Darius status
+// -----------------------------
+
+if (dariusWatered) {
 
     dariusStatus.textContent = "Watered ✓";
 
@@ -75,69 +153,103 @@ if (plantData.dariusWatered) {
 }
 
 
-// Disable button if current user already watered
-if (
-    (currentUser === "Mini" && plantData.miniWatered) ||
-    (currentUser === "Darius" && plantData.dariusWatered)
-) {
+// -----------------------------
+// Button
+// -----------------------------
+
+const userAlreadyWatered =
+    currentUser === "Mini"
+        ? miniWatered
+        : dariusWatered;
+
+
+if (userAlreadyWatered) {
 
     waterButton.disabled = true;
 
-    waterButton.textContent = "Already watered 💧";
+    waterButton.textContent =
+        "Already watered 💧";
 
 } else {
 
     waterButton.disabled = false;
 
-    waterButton.textContent = "Water the Plant 💧";
+    waterButton.textContent =
+        "Water the Plant 💧";
 
 }
 ```
 
 }
 
-// Water the plant
-function waterPlant() {
+// --------------------------------------------------
+// WATER THE PLANT
+// --------------------------------------------------
+
+async function waterPlant() {
 
 ```
+waterButton.disabled = true;
+
+message.textContent =
+    "Watering the plant...";
+
+
+const now = new Date().toISOString();
+
+
+let updateData = {};
+
+
 if (currentUser === "Mini") {
 
-    if (plantData.miniWatered) {
+    updateData = {
+        mini_last_watered: now
+    };
 
-        message.textContent = "You already watered the plant.";
+} else if (currentUser === "Darius") {
 
-        return;
-    }
-
-    plantData.miniWatered = true;
-
-    message.textContent =
-        "Mini watered the plant. Now we wait for Darius. 🌱";
-
+    updateData = {
+        darius_last_watered: now
+    };
 }
 
 
-else if (currentUser === "Darius") {
+const { data, error } = await supabase
+    .from("plant")
+    .update(updateData)
+    .eq("id", 1)
+    .select()
+    .single();
 
-    if (plantData.dariusWatered) {
 
-        message.textContent = "You already watered the plant.";
+if (error) {
 
-        return;
-    }
-
-    plantData.dariusWatered = true;
+    console.error("Supabase update error:", error);
 
     message.textContent =
-        "Darius watered the plant. 🌱";
+        "The plant refused the water. Check the database permissions.";
 
+    waterButton.disabled = false;
+
+    return;
 }
 
 
-updatePlant();
+console.log("Updated plant:", data);
+
+
+message.textContent =
+    "The plant has been watered. 🌱";
+
+
+updatePlantDisplay(data);
 ```
 
 }
 
-// Run when page loads
-updatePlant();
+// --------------------------------------------------
+// START
+// --------------------------------------------------
+
+loadPlant();
