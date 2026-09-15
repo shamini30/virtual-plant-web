@@ -1,358 +1,476 @@
+/* ============================================
+   RESET
+   ============================================ */
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 
-  /* Prevent text selection */
-  user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  }
+    /* Prevent text selection */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
 
-/* ----------------------------------------
-PAGE
----------------------------------------- */
+
+/* ============================================
+   PAGE
+   ============================================ */
 
 html {
-width: 100%;
-min-height: 100%;
+    width: 100%;
+    min-height: 100%;
 }
+
 
 body {
-width: 100%;
-min-height: 100vh;
-min-height: 100dvh;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
 
-```
-display: flex;
-justify-content: center;
-align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-padding: 20px;
+    padding: 20px;
 
-font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif;
 
-background: #f4efe7;
-color: #2f352c;
+    background: #f4efe7;
+    color: #2f352c;
 
-overflow-x: hidden;
+    overflow-x: hidden;
 
-/* Normal arrow cursor everywhere */
-cursor: default;
-```
-
+    /* Normal arrow cursor */
+    cursor: default;
 }
 
-/* ----------------------------------------
-MAIN CONTAINER
----------------------------------------- */
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
 
 .plant-container {
-width: 100%;
-max-width: 500px;
+    width: 100%;
+    max-width: 500px;
 
-```
-margin: 0 auto;
+    margin: 0 auto;
 
-display: flex;
-justify-content: center;
-align-items: center;
-```
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* ----------------------------------------
-PLANT CARD
----------------------------------------- */
+
+/* ============================================
+   CARD
+   ============================================ */
 
 .plant-card {
-width: 100%;
+    width: 100%;
 
-```
-padding: 45px 35px;
+    padding: 45px 35px;
 
-text-align: center;
+    text-align: center;
 
-background: #fffdf8;
+    background: #fffdf8;
 
-border-radius: 24px;
+    border-radius: 24px;
 
-box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.08);
 
-cursor: default;
-```
-
+    cursor: default;
 }
 
-/* ----------------------------------------
-TEXT
----------------------------------------- */
+
+/* ============================================
+   TEXT
+   ============================================ */
 
 h1 {
-margin-bottom: 10px;
+    margin-bottom: 10px;
 
-```
-font-size: 32px;
-font-weight: 600;
+    font-size: 32px;
+    font-weight: 600;
 
-cursor: default;
-```
-
+    cursor: default;
 }
+
 
 .subtitle {
-margin-bottom: 35px;
+    margin-bottom: 35px;
 
-```
-color: #777c72;
+    color: #777c72;
 
-font-size: 15px;
+    font-size: 15px;
 
-cursor: default;
-```
-
+    cursor: default;
 }
+
+
+.login-question {
+    margin-bottom: 18px;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    cursor: default;
+}
+
+
+.password-prompt {
+    margin-bottom: 10px;
+
+    color: #777c72;
+
+    font-size: 14px;
+
+    cursor: default;
+}
+
 
 .plant-status {
-margin-bottom: 30px;
+    margin-bottom: 30px;
 
-```
-font-size: 17px;
-font-weight: 500;
+    font-size: 17px;
+    font-weight: 500;
 
-cursor: default;
-```
-
+    cursor: default;
 }
 
-.person-name {
-display: block;
 
-```
-margin-bottom: 7px;
+/* ============================================
+   HIDDEN ELEMENT
+   ============================================ */
 
-font-weight: 600;
-
-cursor: default;
-```
-
+.hidden {
+    display: none !important;
 }
 
-.water-status {
-font-size: 13px;
-color: #858980;
 
-```
-cursor: default;
-```
+/* ============================================
+   LOGIN
+   ============================================ */
 
+.user-choice {
+    width: 100%;
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 5px;
 }
 
-.message {
-min-height: 20px;
 
-```
-margin-top: 18px;
-
-font-size: 14px;
-color: #777c72;
-
-cursor: default;
-```
-
+.user-button {
+    flex: 1;
 }
 
-/* ----------------------------------------
-PLANT
----------------------------------------- */
+
+.password-area {
+    margin-top: 25px;
+}
+
+
+.password-area input {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid #ddd8ce;
+    border-radius: 12px;
+
+    background: #f9f7f2;
+
+    color: #2f352c;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    outline: none;
+
+    /* Input should still behave like an input */
+    user-select: text;
+    -webkit-user-select: text;
+
+    cursor: text;
+}
+
+
+.password-area input:focus {
+    border-color: #65745b;
+}
+
+
+/* ============================================
+   PLANT DISPLAY
+   ============================================ */
 
 .plant-display {
-width: 100%;
-height: 220px;
+    width: 100%;
+    height: 220px;
 
-```
-display: flex;
-justify-content: center;
-align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-margin-bottom: 20px;
+    margin-bottom: 20px;
 
-cursor: default;
-```
-
+    cursor: default;
 }
+
 
 .plant-image {
-display: block;
+    display: block;
 
-```
-font-size: 120px;
-line-height: 1;
+    font-size: 120px;
+    line-height: 1;
 
-cursor: default;
+    cursor: default;
 
-transition: transform 0.3s ease;
-```
-
+    transition:
+        transform 0.3s ease;
 }
+
 
 .plant-image:hover {
-transform: scale(1.05);
+    transform: scale(1.05);
 }
 
-/* ----------------------------------------
-WATERING INFO
----------------------------------------- */
+
+/* ============================================
+   PEOPLE / WATERING STATUS
+   ============================================ */
 
 .watering-info {
-width: 100%;
+    width: 100%;
 
-```
-display: flex;
-gap: 15px;
+    display: flex;
 
-margin-bottom: 25px;
-```
+    gap: 15px;
 
-}
-
-.person {
-flex: 1;
-
-```
-padding: 15px;
-
-background: #f3f0e9;
-
-border-radius: 14px;
-
-cursor: default;
-```
-
-}
-
-/* ----------------------------------------
-BUTTON
----------------------------------------- */
-
-button {
-width: 100%;
-
-```
-padding: 15px;
-
-border: none;
-border-radius: 14px;
-
-background: #65745b;
-color: white;
-
-font-family: inherit;
-font-size: 16px;
-font-weight: 600;
-
-cursor: pointer;
-
-transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-```
-
-}
-
-button:hover {
-transform: translateY(-2px);
-opacity: 0.9;
-}
-
-button:active {
-transform: translateY(0);
-}
-
-button:disabled {
-cursor: default;
-opacity: 0.6;
-transform: none;
-}
-
-/* ----------------------------------------
-MOBILE
----------------------------------------- */
-
-@media (max-width: 600px) {
-
-```
-body {
-    padding: 15px;
-}
-
-.plant-card {
-    padding: 35px 20px;
-    border-radius: 20px;
-}
-
-h1 {
-    font-size: 26px;
-}
-
-.subtitle {
     margin-bottom: 25px;
 }
 
-.plant-display {
-    height: 180px;
-}
-
-.plant-image {
-    font-size: 100px;
-}
-
-.watering-info {
-    gap: 8px;
-}
 
 .person {
-    padding: 12px 8px;
+    flex: 1;
+
+    padding: 15px;
+
+    background: #f3f0e9;
+
+    border-radius: 14px;
+
+    cursor: default;
 }
-```
+
+
+.person-name {
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-weight: 600;
+
+    cursor: default;
+}
+
+
+.water-status {
+    font-size: 13px;
+
+    color: #858980;
+
+    cursor: default;
+}
+
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+button {
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: #65745b;
+    color: white;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+button:hover {
+    transform: translateY(-2px);
+
+    opacity: 0.9;
+}
+
+
+button:active {
+    transform: translateY(0);
+}
+
+
+button:disabled {
+    cursor: default;
+
+    opacity: 0.6;
+
+    transform: none;
+}
+
+
+/* ============================================
+   LOGOUT / SWITCH PERSON
+   ============================================ */
+
+.logout-button {
+    width: auto;
+
+    margin-top: 15px;
+
+    padding: 8px 12px;
+
+    background: transparent;
+
+    color: #858980;
+
+    font-size: 13px;
+    font-weight: 400;
+}
+
+
+.logout-button:hover {
+    transform: none;
+
+    opacity: 0.7;
+}
+
+
+/* ============================================
+   MESSAGES
+   ============================================ */
+
+.message {
+    min-height: 20px;
+
+    margin-top: 18px;
+
+    font-size: 14px;
+
+    color: #777c72;
+
+    cursor: default;
+}
+
+
+/* ============================================
+   MOBILE
+   ============================================ */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+
+    .plant-card {
+        padding: 35px 20px;
+
+        border-radius: 20px;
+    }
+
+
+    h1 {
+        font-size: 26px;
+    }
+
+
+    .subtitle {
+        margin-bottom: 25px;
+    }
+
+
+    .plant-display {
+        height: 180px;
+    }
+
+
+    .plant-image {
+        font-size: 100px;
+    }
+
+
+    .watering-info {
+        gap: 8px;
+    }
+
+
+    .person {
+        padding: 12px 8px;
+    }
 
 }
 
-/* ----------------------------------------
-VERY SMALL PHONES
----------------------------------------- */
+
+/* ============================================
+   VERY SMALL SCREENS
+   ============================================ */
 
 @media (max-width: 360px) {
 
-```
-body {
-    padding: 10px;
-}
+    body {
+        padding: 10px;
+    }
 
-.plant-card {
-    padding: 30px 15px;
-}
 
-h1 {
-    font-size: 23px;
-}
+    .plant-card {
+        padding: 30px 15px;
+    }
 
-.plant-display {
-    height: 150px;
-}
 
-.plant-image {
-    font-size: 85px;
-}
+    h1 {
+        font-size: 23px;
+    }
 
-.person-name {
-    font-size: 14px;
-}
 
-.water-status {
-    font-size: 11px;
-}
-```
+    .plant-display {
+        height: 150px;
+    }
+
+
+    .plant-image {
+        font-size: 85px;
+    }
+
+
+    .person-name {
+        font-size: 14px;
+    }
+
+
+    .water-status {
+        font-size: 11px;
+    }
 
 }
