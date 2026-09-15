@@ -1,48 +1,143 @@
-// Reference to your Firebase Database location for the plant
-const plantRef = database.ref('sharedPlant');
+/*
+TEMPORARY LOCAL VERSION
 
-// Current plant status (can be seedling, sprout, mature plant, etc.)
-let plantStatus = 'Seedling';
+```
+This is NOT connected to Supabase yet.
 
-// Function to update the plant's status visually and in the database
+We are using this just to test the website interface
+before connecting the database.
+```
+
+*/
+
+// Temporary local data
+let plantData = {
+miniWatered: false,
+dariusWatered: false
+};
+
+// Change this later when we add proper login/authentication
+// For now, you can test both people from the browser console.
+let currentUser = "Mini";
+
+// Get HTML elements
+const plantImage = document.getElementById("plantImage");
+const plantStatus = document.getElementById("plantStatus");
+
+const miniStatus = document.getElementById("miniStatus");
+const dariusStatus = document.getElementById("dariusStatus");
+
+const waterButton = document.getElementById("waterButton");
+const message = document.getElementById("message");
+
+// Update the plant based on current data
+function updatePlant() {
+
+```
+if (plantData.miniWatered && plantData.dariusWatered) {
+
+    plantImage.textContent = "🌹";
+
+    plantStatus.textContent =
+        "The plant is happy. Both of you watered it. 🌹";
+
+} else {
+
+    plantImage.textContent = "🌱";
+
+    plantStatus.textContent =
+        "The plant is waiting for both of you.";
+
+}
+
+
+// Update Mini's status
+if (plantData.miniWatered) {
+
+    miniStatus.textContent = "Watered ✓";
+
+} else {
+
+    miniStatus.textContent = "Not watered";
+
+}
+
+
+// Update Darius's status
+if (plantData.dariusWatered) {
+
+    dariusStatus.textContent = "Watered ✓";
+
+} else {
+
+    dariusStatus.textContent = "Not watered";
+
+}
+
+
+// Disable button if current user already watered
+if (
+    (currentUser === "Mini" && plantData.miniWatered) ||
+    (currentUser === "Darius" && plantData.dariusWatered)
+) {
+
+    waterButton.disabled = true;
+
+    waterButton.textContent = "Already watered 💧";
+
+} else {
+
+    waterButton.disabled = false;
+
+    waterButton.textContent = "Water the Plant 💧";
+
+}
+```
+
+}
+
+// Water the plant
 function waterPlant() {
-    // Update the plant status to the next growth stage
-    if (plantStatus === 'Seedling') {
-        plantStatus = 'Sprout';
-        document.getElementById('plantStatus').innerText = "Plant Status: Sprout 🌱";
-        document.getElementById('plantImage').src = 'sprout.png';
-    } else if (plantStatus === 'Sprout') {
-        plantStatus = 'Mature Plant';
-        document.getElementById('plantStatus').innerText = "Plant Status: Mature Plant 🌳";
-        document.getElementById('plantImage').src = 'mature.png';
-    } else {
-        alert("Your plant is already fully grown!");
+
+```
+if (currentUser === "Mini") {
+
+    if (plantData.miniWatered) {
+
+        message.textContent = "You already watered the plant.";
+
         return;
     }
 
-    // Sync the plant status with Firebase
-    plantRef.set({
-        status: plantStatus
-    });
+    plantData.miniWatered = true;
+
+    message.textContent =
+        "Mini watered the plant. Now we wait for Darius. 🌱";
+
 }
 
-// Function to get the plant status when someone accesses it
-function syncPlantData() {
-    plantRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        if (data && data.status) {
-            plantStatus = data.status;
-            document.getElementById('plantStatus').innerText = `Plant Status: ${plantStatus}`;
-            if (plantStatus === 'Seedling') {
-                document.getElementById('plantImage').src = 'seedling.png';
-            } else if (plantStatus === 'Sprout') {
-                document.getElementById('plantImage').src = 'sprout.png';
-            } else if (plantStatus === 'Mature Plant') {
-                document.getElementById('plantImage').src = 'mature.png';
-            }
-        }
-    });
+
+else if (currentUser === "Darius") {
+
+    if (plantData.dariusWatered) {
+
+        message.textContent = "You already watered the plant.";
+
+        return;
+    }
+
+    plantData.dariusWatered = true;
+
+    message.textContent =
+        "Darius watered the plant. 🌱";
+
 }
 
-// Call this function to sync the plant data across devices
-syncPlantData();
+
+updatePlant();
+```
+
+}
+
+// Run when page loads
+updatePlant();
