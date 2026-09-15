@@ -1,25 +1,30 @@
 // ============================================
-// SUPABASE CONNECTION
-// ============================================
-
-const SUPABASE_URL = "https://qmlnhisiqyibyrpedmxx.supabase.co/rest/v1/";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_8XN0TGVlZ7IC7plY3O1TOQ_2FpUDSg_";
-
-const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
-
-
-// ============================================
 // SIMPLE LOGIN
 // ============================================
 
-// CHANGE THESE PASSWORDS
+// CHANGE THESE TWO PASSWORDS
 const USERS = {
     Mini: "1330",
     Darius: "1330"
 };
+
+
+// ============================================
+// SUPABASE DETAILS
+// ============================================
+
+const SUPABASE_URL = "https://qmlnhisiqyibyrpedmxx.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_8XN0TGVlZ7IC7plY3O1TOQ_2FpUDSg_";
+
+
+// Supabase will be created safely later.
+// Login does NOT depend on it.
+let supabaseClient = null;
+
+
+// ============================================
+// CURRENT USER
+// ============================================
 
 let currentUser = localStorage.getItem("plantUser");
 
@@ -54,23 +59,41 @@ const logoutButton = document.getElementById("logoutButton");
 
 
 // ============================================
-// LOGIN SCREEN
+// CHECK THAT HTML ELEMENTS EXIST
+// ============================================
+
+console.log("Virtual Plant script loaded.");
+
+console.log("Mini button:", miniButton);
+console.log("Darius button:", dariusButton);
+console.log("Password area:", passwordArea);
+
+
+// ============================================
+// SHOW LOGIN SCREEN
 // ============================================
 
 function showLoginScreen() {
+
     loginScreen.classList.remove("hidden");
     plantScreen.classList.add("hidden");
 
     passwordArea.classList.add("hidden");
 
     passwordInput.value = "";
+
     loginMessage.textContent = "";
 
     currentUser = null;
 }
 
 
+// ============================================
+// SHOW PLANT SCREEN
+// ============================================
+
 function showPlantScreen() {
+
     loginScreen.classList.add("hidden");
     plantScreen.classList.remove("hidden");
 
@@ -79,10 +102,13 @@ function showPlantScreen() {
 
 
 // ============================================
-// SELECT USER
+// SELECT MINI / DARIUS
 // ============================================
 
 function selectUser(user) {
+
+    console.log("Selected user:", user);
+
     currentUser = user;
 
     passwordArea.classList.remove("hidden");
@@ -90,6 +116,7 @@ function selectUser(user) {
     loginPrompt.textContent = `Password for ${user}`;
 
     passwordInput.value = "";
+
     loginMessage.textContent = "";
 
     passwordInput.focus();
@@ -102,27 +129,42 @@ function selectUser(user) {
 
 function login() {
 
+    console.log("Login attempt for:", currentUser);
+
     if (!currentUser) {
-        loginMessage.textContent = "Choose who you are first.";
+
+        loginMessage.textContent =
+            "Choose who you are first.";
+
         return;
     }
 
+
     const enteredPassword = passwordInput.value;
+
 
     if (enteredPassword !== USERS[currentUser]) {
 
-        loginMessage.textContent = "Wrong password.";
+        loginMessage.textContent =
+            "Wrong password.";
 
         passwordInput.value = "";
+
         passwordInput.focus();
 
         return;
     }
 
-    // Remember who this browser belongs to
+
+    console.log("Login successful:", currentUser);
+
+
+    // Remember this person on this browser
     localStorage.setItem("plantUser", currentUser);
 
+
     loginMessage.textContent = "";
+
 
     showPlantScreen();
 }
@@ -141,22 +183,107 @@ function logout() {
 
 
 // ============================================
-// SUPABASE: LOAD PLANT
+// INITIALIZE SUPABASE
+// ============================================
+
+function initializeSupabase() {
+
+    try {
+
+        if (
+            !window.supabase ||
+            !window.supabase.createClient
+        ) {
+
+            console.error(
+                "Supabase library did not load."
+            );
+
+            return false;
+        }
+
+
+        if (
+            SUPABASE_URL === "YOUR_SUPABASE_PROJECT_URL" ||
+            SUPABASE_PUBLISHABLE_KEY === "YOUR_SUPABASE_PUBLISHABLE_KEY"
+        ) {
+
+            console.error(
+                "Supabase URL or publishable key has not been added."
+            );
+
+            return false;
+        }
+
+
+        supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
+
+
+        console.log("Supabase connected.");
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Could not initialize Supabase:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+// ============================================
+// LOAD PLANT
 // ============================================
 
 async function loadPlant() {
 
-    message.textContent = "Checking on the plant...";
+    message.textContent =
+        "Checking on the plant...";
 
-    const { data, error } = await supabase
+
+    // Make sure Supabase is available
+    if (!supabaseClient) {
+
+        const connected =
+            initializeSupabase();
+
+
+        if (!connected) {
+
+            message.textContent =
+                "The plant database could not be reached.";
+
+            return;
+        }
+    }
+
+
+    const {
+        data,
+        error
+    } = await supabaseClient
         .from("plant")
-        .select("id, mini_last_watered, darius_last_watered")
+        .select(
+            "id, mini_last_watered, darius_last_watered"
+        )
         .eq("id", 1)
         .single();
 
+
     if (error) {
 
-        console.error("Supabase error:", error);
+        console.error(
+            "Supabase load error:",
+            error
+        );
 
         message.textContent =
             "Couldn't connect to the plant database.";
@@ -164,7 +291,12 @@ async function loadPlant() {
         return;
     }
 
-    console.log("Plant data:", data);
+
+    console.log(
+        "Plant data:",
+        data
+    );
+
 
     updatePlantDisplay(data);
 
@@ -182,17 +314,28 @@ function isWateredWithin24Hours(timestamp) {
         return false;
     }
 
-    const wateredTime = new Date(timestamp).getTime();
-    const now = Date.now();
 
-    const twentyFourHours = 24 * 60 * 60 * 1000;
+    const wateredTime =
+        new Date(timestamp).getTime();
 
-    return (now - wateredTime) < twentyFourHours;
+
+    const now =
+        Date.now();
+
+
+    const twentyFourHours =
+        24 * 60 * 60 * 1000;
+
+
+    return (
+        now - wateredTime <
+        twentyFourHours
+    );
 }
 
 
 // ============================================
-// TIME DISPLAY
+// TIME SINCE WATERING
 // ============================================
 
 function getTimeSince(timestamp) {
@@ -201,26 +344,43 @@ function getTimeSince(timestamp) {
         return "Not watered";
     }
 
-    const wateredTime = new Date(timestamp).getTime();
-    const difference = Date.now() - wateredTime;
 
-    const minutes = Math.floor(difference / (1000 * 60));
+    const wateredTime =
+        new Date(timestamp).getTime();
+
+
+    const difference =
+        Date.now() - wateredTime;
+
+
+    const minutes =
+        Math.floor(
+            difference / (1000 * 60)
+        );
+
 
     if (minutes < 1) {
         return "Just now";
     }
 
+
     if (minutes < 60) {
         return `${minutes}m ago`;
     }
 
-    const hours = Math.floor(minutes / 60);
+
+    const hours =
+        Math.floor(minutes / 60);
+
 
     if (hours < 24) {
         return `${hours}h ago`;
     }
 
-    const days = Math.floor(hours / 24);
+
+    const days =
+        Math.floor(hours / 24);
+
 
     return `${days}d ago`;
 }
@@ -232,20 +392,26 @@ function getTimeSince(timestamp) {
 
 function updatePlantDisplay(data) {
 
-    const miniWatered = isWateredWithin24Hours(
-        data.mini_last_watered
-    );
+    const miniWatered =
+        isWateredWithin24Hours(
+            data.mini_last_watered
+        );
 
-    const dariusWatered = isWateredWithin24Hours(
-        data.darius_last_watered
-    );
+
+    const dariusWatered =
+        isWateredWithin24Hours(
+            data.darius_last_watered
+        );
 
 
     // ----------------------------------------
     // PLANT CONDITION
     // ----------------------------------------
 
-    if (miniWatered && dariusWatered) {
+    if (
+        miniWatered &&
+        dariusWatered
+    ) {
 
         plantImage.textContent = "🌹";
 
@@ -258,7 +424,6 @@ function updatePlantDisplay(data) {
 
         plantStatus.textContent =
             "The plant needs both of you.";
-
     }
 
 
@@ -269,7 +434,9 @@ function updatePlantDisplay(data) {
     if (miniWatered) {
 
         miniStatus.textContent =
-            `Watered ${getTimeSince(data.mini_last_watered)} ✓`;
+            `Watered ${getTimeSince(
+                data.mini_last_watered
+            )} ✓`;
 
     } else if (data.mini_last_watered) {
 
@@ -280,7 +447,6 @@ function updatePlantDisplay(data) {
 
         miniStatus.textContent =
             "Not watered";
-
     }
 
 
@@ -291,7 +457,9 @@ function updatePlantDisplay(data) {
     if (dariusWatered) {
 
         dariusStatus.textContent =
-            `Watered ${getTimeSince(data.darius_last_watered)} ✓`;
+            `Watered ${getTimeSince(
+                data.darius_last_watered
+            )} ✓`;
 
     } else if (data.darius_last_watered) {
 
@@ -302,12 +470,11 @@ function updatePlantDisplay(data) {
 
         dariusStatus.textContent =
             "Not watered";
-
     }
 
 
     // ----------------------------------------
-    // CURRENT USER'S BUTTON
+    // CURRENT USER'S WATER BUTTON
     // ----------------------------------------
 
     const userAlreadyWatered =
@@ -329,7 +496,6 @@ function updatePlantDisplay(data) {
 
         waterButton.textContent =
             "Water the Plant 💧";
-
     }
 }
 
@@ -344,13 +510,32 @@ async function waterPlant() {
         return;
     }
 
+
+    if (!supabaseClient) {
+
+        const connected =
+            initializeSupabase();
+
+
+        if (!connected) {
+
+            message.textContent =
+                "The plant database could not be reached.";
+
+            return;
+        }
+    }
+
+
     waterButton.disabled = true;
 
     message.textContent =
         "Watering the plant...";
 
 
-    const now = new Date().toISOString();
+    const now =
+        new Date().toISOString();
+
 
     let updateData = {};
 
@@ -366,11 +551,13 @@ async function waterPlant() {
         updateData = {
             darius_last_watered: now
         };
-
     }
 
 
-    const { data, error } = await supabase
+    const {
+        data,
+        error
+    } = await supabaseClient
         .from("plant")
         .update(updateData)
         .eq("id", 1)
@@ -380,7 +567,10 @@ async function waterPlant() {
 
     if (error) {
 
-        console.error("Watering error:", error);
+        console.error(
+            "Watering error:",
+            error
+        );
 
         message.textContent =
             "The plant refused the water. Check the database permissions.";
@@ -391,10 +581,15 @@ async function waterPlant() {
     }
 
 
-    console.log("Updated plant:", data);
+    console.log(
+        "Updated plant:",
+        data
+    );
+
 
     message.textContent =
         "The plant has been watered. 🌱";
+
 
     updatePlantDisplay(data);
 }
@@ -404,50 +599,97 @@ async function waterPlant() {
 // BUTTON EVENTS
 // ============================================
 
-miniButton.addEventListener("click", function () {
-    selectUser("Mini");
-});
+// MINI
+miniButton.addEventListener(
+    "click",
+    function () {
 
+        selectUser("Mini");
 
-dariusButton.addEventListener("click", function () {
-    selectUser("Darius");
-});
-
-
-loginButton.addEventListener("click", function () {
-    login();
-});
-
-
-passwordInput.addEventListener("keydown", function (event) {
-
-    if (event.key === "Enter") {
-        login();
     }
-
-});
-
-
-waterButton.addEventListener("click", function () {
-    waterPlant();
-});
+);
 
 
-logoutButton.addEventListener("click", function () {
-    logout();
-});
+// DARIUS
+dariusButton.addEventListener(
+    "click",
+    function () {
+
+        selectUser("Darius");
+
+    }
+);
+
+
+// LOGIN
+loginButton.addEventListener(
+    "click",
+    function () {
+
+        login();
+
+    }
+);
+
+
+// PASSWORD ENTER KEY
+passwordInput.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Enter") {
+
+            login();
+
+        }
+
+    }
+);
+
+
+// WATER
+waterButton.addEventListener(
+    "click",
+    function () {
+
+        waterPlant();
+
+    }
+);
+
+
+// SWITCH PERSON
+logoutButton.addEventListener(
+    "click",
+    function () {
+
+        logout();
+
+    }
+);
 
 
 // ============================================
 // STARTUP
 // ============================================
 
-if (currentUser === "Mini" || currentUser === "Darius") {
+if (
+    currentUser === "Mini" ||
+    currentUser === "Darius"
+) {
+
+    console.log(
+        "Returning user:",
+        currentUser
+    );
 
     showPlantScreen();
 
 } else {
 
-    showLoginScreen();
+    console.log(
+        "No saved user. Showing login."
+    );
 
+    showLoginScreen();
 }
