@@ -1,35 +1,213 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Grow Your Virtual Plant</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  }
 
-    <div class="container">
-        <h1>Grow Your Virtual Plant 🌱</h1>
+body {
+min-height: 100vh;
 
-        <!-- Image representing the plant -->
-        <img id="plantImage" src="seedling.png" alt="Virtual Plant">
+```
+display: flex;
+justify-content: center;
+align-items: center;
 
-        <!-- Plant Status -->
-        <p id="plantStatus">Plant Status: Seedling</p>
+font-family: Arial, sans-serif;
 
-        <!-- Water Button -->
-        <button onclick="waterPlant()">Water the Plant</button>
-    </div>
+background: #f4efe7;
+color: #2f352c;
+```
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js"></script>
+}
 
-    <!-- Your Firebase Configuration -->
-    <script src="firebase-config.js"></script>
+.plant-container {
+width: 100%;
+padding: 30px;
+}
 
-    <!-- Your main script -->
-    <script src="script.js"></script>
+.plant-card {
+width: 100%;
+max-width: 500px;
 
-</body>
-</html>
+```
+margin: auto;
+padding: 45px 35px;
+
+text-align: center;
+
+background: #fffdf8;
+
+border-radius: 24px;
+
+box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.08);
+```
+
+}
+
+h1 {
+margin-bottom: 10px;
+
+```
+font-size: 32px;
+font-weight: 600;
+```
+
+}
+
+.subtitle {
+margin-bottom: 35px;
+
+```
+color: #777c72;
+
+font-size: 15px;
+```
+
+}
+
+.plant-display {
+height: 220px;
+
+```
+display: flex;
+justify-content: center;
+align-items: center;
+
+margin-bottom: 20px;
+```
+
+}
+
+.plant-image {
+font-size: 120px;
+
+```
+transition: transform 0.3s ease;
+```
+
+}
+
+.plant-image:hover {
+transform: scale(1.05);
+}
+
+.plant-status {
+margin-bottom: 30px;
+
+```
+font-size: 17px;
+font-weight: 500;
+```
+
+}
+
+.watering-info {
+display: flex;
+gap: 15px;
+
+```
+margin-bottom: 25px;
+```
+
+}
+
+.person {
+flex: 1;
+
+```
+padding: 15px;
+
+background: #f3f0e9;
+
+border-radius: 14px;
+```
+
+}
+
+.person-name {
+display: block;
+
+```
+margin-bottom: 7px;
+
+font-weight: 600;
+```
+
+}
+
+.water-status {
+font-size: 13px;
+color: #858980;
+}
+
+button {
+width: 100%;
+
+```
+padding: 15px;
+
+border: none;
+border-radius: 14px;
+
+background: #65745b;
+color: white;
+
+font-size: 16px;
+font-weight: 600;
+
+cursor: pointer;
+
+transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+```
+
+}
+
+button:hover {
+transform: translateY(-2px);
+opacity: 0.9;
+}
+
+button:active {
+transform: translateY(0);
+}
+
+.message {
+min-height: 20px;
+
+```
+margin-top: 18px;
+
+font-size: 14px;
+color: #777c72;
+```
+
+}
+
+@media (max-width: 500px) {
+
+```
+.plant-container {
+    padding: 15px;
+}
+
+.plant-card {
+    padding: 35px 20px;
+}
+
+h1 {
+    font-size: 26px;
+}
+
+.watering-info {
+    gap: 8px;
+}
+
+.person {
+    padding: 12px 8px;
+}
+```
+
+}
