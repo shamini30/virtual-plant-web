@@ -1,213 +1,69 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  }
+<!DOCTYPE html>
 
-body {
-min-height: 100vh;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 ```
-display: flex;
-justify-content: center;
-align-items: center;
+<title>Our Little Plant 🌹</title>
 
-font-family: Arial, sans-serif;
-
-background: #f4efe7;
-color: #2f352c;
+<link rel="stylesheet" href="style.css">
 ```
 
-}
+</head>
 
-.plant-container {
-width: 100%;
-padding: 30px;
-}
-
-.plant-card {
-width: 100%;
-max-width: 500px;
+<body>
 
 ```
-margin: auto;
-padding: 45px 35px;
+<main class="plant-container">
 
-text-align: center;
+    <section class="plant-card">
 
-background: #fffdf8;
+        <h1>Our Little Plant 🌹</h1>
 
-border-radius: 24px;
+        <p class="subtitle">
+            A little plant that needs both of us.
+        </p>
 
-box-shadow:
-    0 15px 40px rgba(0, 0, 0, 0.08);
+        <div class="plant-display">
+            <div id="plantImage" class="plant-image">🌱</div>
+        </div>
+
+        <p id="plantStatus" class="plant-status">
+            Waiting to be watered...
+        </p>
+
+        <div class="watering-info">
+
+            <div class="person">
+                <span class="person-name">Mini</span>
+                <span id="miniStatus" class="water-status">
+                    Not watered
+                </span>
+            </div>
+
+            <div class="person">
+                <span class="person-name">Darius</span>
+                <span id="dariusStatus" class="water-status">
+                    Not watered
+                </span>
+            </div>
+
+        </div>
+
+        <button id="waterButton" onclick="waterPlant()">
+            Water the Plant 💧
+        </button>
+
+        <p id="message" class="message"></p>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
 ```
 
-}
-
-h1 {
-margin-bottom: 10px;
-
-```
-font-size: 32px;
-font-weight: 600;
-```
-
-}
-
-.subtitle {
-margin-bottom: 35px;
-
-```
-color: #777c72;
-
-font-size: 15px;
-```
-
-}
-
-.plant-display {
-height: 220px;
-
-```
-display: flex;
-justify-content: center;
-align-items: center;
-
-margin-bottom: 20px;
-```
-
-}
-
-.plant-image {
-font-size: 120px;
-
-```
-transition: transform 0.3s ease;
-```
-
-}
-
-.plant-image:hover {
-transform: scale(1.05);
-}
-
-.plant-status {
-margin-bottom: 30px;
-
-```
-font-size: 17px;
-font-weight: 500;
-```
-
-}
-
-.watering-info {
-display: flex;
-gap: 15px;
-
-```
-margin-bottom: 25px;
-```
-
-}
-
-.person {
-flex: 1;
-
-```
-padding: 15px;
-
-background: #f3f0e9;
-
-border-radius: 14px;
-```
-
-}
-
-.person-name {
-display: block;
-
-```
-margin-bottom: 7px;
-
-font-weight: 600;
-```
-
-}
-
-.water-status {
-font-size: 13px;
-color: #858980;
-}
-
-button {
-width: 100%;
-
-```
-padding: 15px;
-
-border: none;
-border-radius: 14px;
-
-background: #65745b;
-color: white;
-
-font-size: 16px;
-font-weight: 600;
-
-cursor: pointer;
-
-transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
-```
-
-}
-
-button:hover {
-transform: translateY(-2px);
-opacity: 0.9;
-}
-
-button:active {
-transform: translateY(0);
-}
-
-.message {
-min-height: 20px;
-
-```
-margin-top: 18px;
-
-font-size: 14px;
-color: #777c72;
-```
-
-}
-
-@media (max-width: 500px) {
-
-```
-.plant-container {
-    padding: 15px;
-}
-
-.plant-card {
-    padding: 35px 20px;
-}
-
-h1 {
-    font-size: 26px;
-}
-
-.watering-info {
-    gap: 8px;
-}
-
-.person {
-    padding: 12px 8px;
-}
-```
-
-}
+</body>
+</html>
