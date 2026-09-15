@@ -1,124 +1,199 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<meta charset="UTF-8">
+    <title>Our Little Plant 🌹</title>
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>Our Little Plant 🌹</title>
-
-<link rel="stylesheet" href="style.css">
-```
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-```
-<main class="plant-container">
+    <main class="plant-container">
 
-    <section class="plant-card">
+        <section class="plant-card">
 
-        <h1>Our Little Plant 🌹</h1>
+            <!-- ========================= -->
+            <!-- LOGIN SCREEN -->
+            <!-- ========================= -->
 
-        <p class="subtitle">
-            A little plant that needs both of us.
-        </p>
+            <div id="loginScreen" class="screen">
+
+                <h1>Our Little Plant 🌹</h1>
+
+                <p class="subtitle">
+                    A little plant that needs both of us.
+                </p>
+
+                <p class="login-question">
+                    Who are you?
+                </p>
+
+                <div class="user-choice">
+
+                    <button
+                        id="miniButton"
+                        class="user-button"
+                        type="button">
+                        Mini
+                    </button>
+
+                    <button
+                        id="dariusButton"
+                        class="user-button"
+                        type="button">
+                        Darius
+                    </button>
+
+                </div>
 
 
-        <div class="plant-display">
+                <!-- Password area appears after choosing a person -->
 
-            <div
-                id="plantImage"
-                class="plant-image"
-            >
-                🌱
+                <div
+                    id="passwordArea"
+                    class="password-area hidden">
+
+                    <p id="loginPrompt" class="password-prompt">
+                        Password
+                    </p>
+
+                    <input
+                        id="passwordInput"
+                        type="password"
+                        placeholder="Enter password"
+                        autocomplete="off"
+                    >
+
+                    <button
+                        id="loginButton"
+                        type="button">
+                        Enter
+                    </button>
+
+                    <p
+                        id="loginMessage"
+                        class="message">
+                    </p>
+
+                </div>
+
             </div>
 
-        </div>
+
+            <!-- ========================= -->
+            <!-- PLANT SCREEN -->
+            <!-- ========================= -->
+
+            <div id="plantScreen" class="screen hidden">
+
+                <h1>Our Little Plant 🌹</h1>
+
+                <p class="subtitle">
+                    A little plant that needs both of us.
+                </p>
 
 
-        <p
-            id="plantStatus"
-            class="plant-status"
-        >
-            Waiting to be watered...
-        </p>
+                <!-- Plant -->
+
+                <div class="plant-display">
+
+                    <div
+                        id="plantImage"
+                        class="plant-image">
+                        🌱
+                    </div>
+
+                </div>
 
 
-        <div class="watering-info">
+                <!-- Overall plant status -->
 
-            <div class="person">
+                <p
+                    id="plantStatus"
+                    class="plant-status">
+                    Checking on the plant...
+                </p>
 
-                <span class="person-name">
-                    Mini
-                </span>
 
-                <span
-                    id="miniStatus"
-                    class="water-status"
-                >
-                    Not watered
-                </span>
+                <!-- Individual watering status -->
+
+                <div class="watering-info">
+
+                    <div class="person">
+
+                        <span class="person-name">
+                            Mini
+                        </span>
+
+                        <span
+                            id="miniStatus"
+                            class="water-status">
+                            Not watered
+                        </span>
+
+                    </div>
+
+
+                    <div class="person">
+
+                        <span class="person-name">
+                            Darius
+                        </span>
+
+                        <span
+                            id="dariusStatus"
+                            class="water-status">
+                            Not watered
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Water button -->
+
+                <button
+                    id="waterButton"
+                    type="button">
+                    Water the Plant 💧
+                </button>
+
+
+                <!-- Database / action message -->
+
+                <p
+                    id="message"
+                    class="message">
+                </p>
+
+
+                <!-- Switch user -->
+
+                <button
+                    id="logoutButton"
+                    class="logout-button"
+                    type="button">
+                    Switch person
+                </button>
 
             </div>
 
+        </section>
 
-            <div class="person">
-
-                <span class="person-name">
-                    Darius
-                </span>
-
-                <span
-                    id="dariusStatus"
-                    class="water-status"
-                >
-                    Not watered
-                </span>
-
-            </div>
-
-        </div>
+    </main>
 
 
-        <button
-            id="waterButton"
-            onclick="waterPlant()"
-        >
-            Water the Plant 💧
-        </button>
+    <!-- Supabase -->
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        <p
-            id="message"
-            class="message"
-        ></p>
+    <!-- Our JavaScript -->
 
-    </section>
-
-</main>
-
-
-<!-- Supabase JavaScript library -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
-
-
-<!-- Our JavaScript -->
-
-<script src="script.js"></script>
-```
+    <script src="script.js"></script>
 
 </body>
-
 </html>
