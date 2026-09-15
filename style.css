@@ -209,5 +209,12 @@ h1 {
     padding: 12px 8px;
 }
 ```
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 }
